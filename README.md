@@ -20,7 +20,7 @@
 ## 🔗 Connect with Developer
 <p align="left">
   <a href="https://www.linkedin.com/in/mohd-naved-82757a2aa/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-  <a href="navedsheikh7983@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+  <a href="mailto:navedsheikh7983@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
   <a href="https://bit.ly/4rMkxbk"><img src="https://img.shields.io/badge/Live_Deployment-FF9900?style=for-the-badge&logo=amazon-s3&logoColor=black" /></a>
 </p>
 
