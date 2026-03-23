@@ -121,6 +121,6 @@ mvn clean install -DskipTests
 mvn spring-boot:run
 ```
 
-\<p align="center"\>
-\<i\>Developed and Engineered by \<b\>Mohd Naved\</b\>\</i\>
-\</p\>
+<p align="center">
+<i>Developed and Engineered by <b>Mohd Naved</b></i>
+</p>
