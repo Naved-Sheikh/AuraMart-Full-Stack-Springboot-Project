@@ -1,4 +1,4 @@
-````markdown
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/20fabae1-f22c-4151-802b-15b19f84a8a5" />````markdown
 <h1 align="center"> 🛒 AuraMart - Enterprise-Grade Full-Stack E-Commerce Ecosystem </h1>
 
 <p align="center"> 
