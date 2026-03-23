@@ -28,8 +28,7 @@
 
 ## 📸 Project Interface & Visuals
 <p align="center">
-  <i><img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/6b0ccaed-1d1f-4b57-8a21-929a3566aa5d" />
-</i>
+  <i>(Add your application screenshots here to showcase the UI/UX)</i>
 </p>
 
 ---
