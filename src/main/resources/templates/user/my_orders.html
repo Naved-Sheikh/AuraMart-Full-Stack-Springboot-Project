@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Aura Mart | My Orders</title>
+</head>
+<body>
+	<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 90vh;">
+		<div class="container mt-4 mt-md-5">
+			
+			<div class="row justify-content-center mb-4">
+				<div class="col-md-10">
+					<th:block th:if="${session.succMsg}">
+						<div class="alert alert-success alert-dismissible fade show border-0 shadow-sm text-center py-2 rounded-pill" role="alert">
+							<i class="fa-solid fa-circle-check me-2"></i>[[${session.succMsg}]]
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</div>
+					</th:block>
+
+					<th:block th:if="${session.errorMsg}">
+						<div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm text-center py-2 rounded-pill" role="alert">
+							<i class="fa-solid fa-triangle-exclamation me-2"></i>[[${session.errorMsg}]]
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</div>
+					</th:block>
+				</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-lg-11">
+					<div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+						
+						<div class="card-header bg-black text-white py-4 border-0 d-flex align-items-center px-4">
+							<i class="fa-solid fa-box-open fs-3 me-3 text-warning"></i>
+							<div>
+								<h4 class="mb-0 fw-bold">Order History</h4>
+								<p class="small text-secondary mb-0">Track and manage your recent purchases</p>
+							</div>
+						</div>
+
+						<div class="card-body p-0">
+							
+							<th:block th:if="${orders != null and !orders.empty}">
+								<div class="table-responsive">
+									<table class="table table-hover align-middle mb-0 text-center">
+										<thead class="table-light text-muted small text-uppercase">
+											<tr>
+												<th scope="col" class="py-3 px-4 text-start">Order ID</th>
+												<th scope="col" class="py-3">Date</th>
+												<th scope="col" class="py-3 text-start">Product</th>
+												<th scope="col" class="py-3">Amount</th>
+												<th scope="col" class="py-3">Status</th>
+												<th scope="col" class="py-3">Action</th>
+											</tr>
+										</thead>
+										<tbody class="border-top-0">
+											<tr th:each="o:${orders}">
+												
+												<td class="text-start px-4">
+													<span class="fw-bold text-dark font-monospace">#[[${o.orderId}]]</span>
+												</td>
+												
+												<td class="text-secondary small fw-bold">[[${o.orderDate}]]</td>
+												
+												<td class="text-start fw-bold text-dark">
+													<i class="fa-solid fa-cube text-muted me-2 small"></i>[[${o.product.title}]]
+												</td>
+												
+												<td>
+													<div class="d-flex flex-column align-items-center">
+														<span class="fs-6 fw-bold text-success">₹[[${o.quantity * o.price}]]</span>
+														<span class="small text-muted">(₹[[${o.price}]] x [[${o.quantity}]])</span>
+													</div>
+												</td>
+												
+												<td>
+													<span class="badge rounded-pill px-3 py-2 fw-bold shadow-sm"
+														  th:classappend="${o.status == 'Cancelled' ? 'bg-danger-subtle text-danger border border-danger' : 
+														  				(o.status == 'Delivered' ? 'bg-success-subtle text-success border border-success' : 'bg-primary-subtle text-primary border border-primary')}">
+														[[${o.status}]]
+													</span>
+												</td>
+												
+												<td>
+													<th:block th:if="${o.status != 'Cancelled' and o.status != 'Delivered'}">
+														<a th:href="@{'/user/update-status?id='+${o.id}+'&st=6'}" 
+														   class="btn btn-sm btn-outline-danger rounded-pill fw-bold transition-hover px-3">
+															<i class="fa-solid fa-xmark me-1"></i> Cancel
+														</a>
+													</th:block> 
+													
+													<th:block th:if="${o.status == 'Cancelled' or o.status == 'Delivered'}">
+														<button class="btn btn-sm btn-light text-muted rounded-pill fw-bold px-3 shadow-none" disabled>
+															<i class="fa-solid fa-ban me-1 small"></i> N/A
+														</button>
+													</th:block>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</th:block>
+
+							<th:block th:unless="${orders != null and !orders.empty}">
+								<div class="text-center py-5">
+									<i class="fa-solid fa-receipt fa-4x text-muted mb-3 opacity-50"></i>
+									<h4 class="fw-bold text-dark">No orders found</h4>
+									<p class="text-secondary mb-4">You haven't placed any orders yet. Let's fix that!</p>
+									<a href="/products" class="btn btn-black text-white rounded-pill px-5 py-2 fw-bold shadow-sm transition-hover">
+										Browse Products
+									</a>
+								</div>
+							</th:block>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<style>
+		.btn-black { background-color: #000; border: none; }
+		.btn-black:hover { background-color: #333; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+		
+		/* Subtle hover effect for table rows */
+		.table-hover tbody tr:hover { background-color: rgba(255, 193, 7, 0.05); }
+		
+		.transition-hover { transition: all 0.3s ease; }
+		.transition-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2); }
+		
+		/* Custom Badge Colors */
+		.bg-primary-subtle { background-color: #cce5ff; }
+		.bg-success-subtle { background-color: #d4edda; }
+		.bg-danger-subtle { background-color: #f8d7da; }
+		
+		.font-monospace { letter-spacing: 0.5px; }
+	</style>
+</body>
+</html>

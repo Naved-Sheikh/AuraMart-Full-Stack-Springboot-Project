@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Register | AuraMart</title>
+</head>
+<body>
+<section>
+<div class="auth-page-container py-5 px-3 overflow-hidden" style="background-color: #f8f9fa; min-height: 90vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                
+                <div class="premium-card p-4 p-md-5 aura-slide-in-right" id="authCard">
+                    
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold text-dark mb-1">Create <span style="color: #ff9800;">Account</span></h2>
+                        <p class="text-muted small fw-bold text-uppercase tracking-wider">Please provide your details to register</p>
+                    </div>
+
+                    <th:block th:if="${session.succMsg}">
+                        <div class="alert alert-success border-0 small py-2 mb-4 text-center rounded-3" style="background-color: #d4edda; color: #155724;">
+                            <span th:text="${session.succMsg}"></span>
+                        </div>
+                        <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                    </th:block>
+
+                    <th:block th:if="${session.errorMsg}">
+                        <div class="alert alert-danger border-0 small py-2 mb-4 text-center rounded-3">
+                            <span th:text="${session.errorMsg}"></span>
+                        </div>
+                        <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                    </th:block>
+
+                    <form action="/saveUser" enctype="multipart/form-data" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">Full Name</label>
+                                <input required class="form-control aura-input" name="name" type="text" placeholder="Enter full name">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">Mobile Number</label>
+                                <input required class="form-control aura-input" name="mobileNumber" type="number" placeholder="Enter mobile number">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold text-secondary">Email Address</label>
+                                <input required class="form-control aura-input" name="email" type="email" placeholder="Enter email address">
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label small fw-bold text-secondary">Address</label>
+                                <input required class="form-control aura-input" name="address" type="text" placeholder="Enter street/building address">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-secondary">City</label>
+                                <input required class="form-control aura-input" name="city" type="text" placeholder="Enter city">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">State</label>
+                                <input required class="form-control aura-input" name="state" type="text" placeholder="Enter state">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">Pincode</label>
+                                <input required class="form-control aura-input" name="pincode" type="number" placeholder="Enter postal code">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">Password</label>
+                                <input required class="form-control aura-input" name="password" type="password" placeholder="Create password">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-secondary">Confirm Password</label>
+                                <input required class="form-control aura-input" name="confirmpassword" type="password" placeholder="Re-enter password">
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label class="form-label small fw-bold text-secondary">Profile Image</label>
+                                <input class="form-control aura-input" name="img" type="file">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark-aura w-100 py-3 fw-bold shadow-sm">
+                            Complete Registration
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="small text-muted mb-0">
+                            Already have an account? <a href="/signin" class="fw-bold text-decoration-none transition-link" style="color: #ff9800;">Sign In</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Clean Styling */
+    .premium-card { 
+        background: #fff; 
+        border-radius: 20px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
+        border: 1px solid #eee; 
+    }
+    .aura-input { 
+        background: #fdfdfd; 
+        border: 1.5px solid #ececec; 
+        border-radius: 10px; 
+        padding: 10px 15px; 
+        font-size: 0.95rem; 
+        transition: 0.3s;
+    }
+    .aura-input:focus { 
+        border-color: #ff9800; 
+        box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.1); 
+        outline: none; 
+    }
+    .btn-dark-aura { 
+        background: #000; 
+        color: #fff; 
+        border-radius: 12px; 
+        border: none; 
+        transition: 0.3s; 
+    }
+    .btn-dark-aura:hover { 
+        transform: translateY(-2px); 
+        background: #222; 
+    }
+
+    /* Slide Animation Logic */
+    .aura-slide-in-right { 
+        animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+    }
+    .aura-slide-out-right { 
+        animation: slideOutRight 0.4s ease-in forwards !important; 
+    }
+
+    @keyframes slideInRight { 
+        from { opacity: 0; transform: translateX(100px); } 
+        to { opacity: 1; transform: translateX(0); } 
+    }
+    @keyframes slideOutRight { 
+        to { opacity: 0; transform: translateX(100px); } 
+    }
+</style>
+
+<script>
+    // Smooth transition to Sign In
+    document.querySelector('.transition-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = this.href;
+        document.getElementById('authCard').classList.add('aura-slide-out-right');
+        setTimeout(() => window.location.href = target, 350);
+    });
+</script>
+</section>
+</body>
+</html>

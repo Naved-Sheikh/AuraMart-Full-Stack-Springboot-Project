@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<body>
+	<section>
+		<div class="admin-dashboard-wrapper py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			
+			<div class="header-section mb-5 text-center">
+				<h2 class="text-dark fw-bold display-6 mb-1">Admin <span class="gold-gradient-text">Console</span></h2>
+				<div class="gold-status-bar">
+					<span class="pulse-dot"></span> System Online
+				</div>
+			</div>
+
+			<div class="row g-3 g-md-4 row-cols-2 row-cols-md-3 justify-content-center max-w-custom mx-auto">
+				
+				<div class="col animate-pop-in" style="animation-delay: 0.1s;">
+					<a href="/admin/loadAddProduct" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-square-plus"></i>
+							</div>
+							<h5>Add Product</h5>
+							<p class="card-hint">New Item</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col animate-pop-in" style="animation-delay: 0.2s;">
+					<a href="/admin/category" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-folder-tree"></i>
+							</div>
+							<h5>Categories</h5>
+							<p class="card-hint">Manage Sets</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col animate-pop-in" style="animation-delay: 0.3s;">
+					<a href="/admin/products" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-table-list"></i>
+							</div>
+							<h5>Inventory</h5>
+							<p class="card-hint">Total Stock</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col animate-pop-in" style="animation-delay: 0.4s;">
+					<a href="/admin/orders" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-box-open"></i>
+							</div>
+							<h5>Orders</h5>
+							<p class="card-hint">Live Status</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col animate-pop-in" style="animation-delay: 0.5s;">
+					<a href="/admin/users?type=1" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-circle-user"></i>
+							</div>
+							<h5>Users</h5>
+							<p class="card-hint">Customer Base</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col animate-pop-in" style="animation-delay: 0.6s;">
+					<a href="/admin/add-admin" class="text-decoration-none">
+						<div class="aura-black-card">
+							<div class="card-glow"></div>
+							<div class="icon-sphere">
+								<i class="fa-solid fa-user-plus"></i>
+							</div>
+							<h5>Add Admin</h5>
+							<p class="card-hint">Security</p>
+						</div>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<style>
+			/* --- THEME SETUP --- */
+			.admin-dashboard-wrapper { font-family: 'Poppins', sans-serif; }
+			.max-w-custom { max-width: 1000px; } /* Thoda center mein rakhne ke liye */
+
+			.gold-gradient-text {
+				background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.gold-status-bar {
+				color: #555;
+				font-size: 0.85rem;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+
+			.pulse-dot {
+				width: 8px;
+				height: 8px;
+				background: #ffc107;
+				border-radius: 50%;
+				box-shadow: 0 0 10px #ffc107;
+				animation: dot-pulse 1.5s infinite;
+			}
+
+			/* --- BLACK BOXES ON LIGHT BACKGROUND --- */
+			.aura-black-card {
+				background: #0a0a0a; /* Deep Black Box */
+				border: 1px solid #222;
+				border-radius: 24px;
+				padding: 35px 15px;
+				text-align: center;
+				position: relative;
+				overflow: hidden;
+				transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+				box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* Light shadow for depth */
+			}
+
+			.aura-black-card h5 { color: #fff; font-weight: 700; font-size: 1.1rem; margin-top: 20px; margin-bottom: 5px; }
+			.card-hint { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+
+			.icon-sphere {
+				width: 65px;
+				height: 65px;
+				background: #1a1a1a;
+				border-radius: 18px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 auto;
+				color: #ffc107;
+				font-size: 1.8rem;
+				border: 1px solid #333;
+				transition: all 0.4s ease;
+			}
+
+			/* --- HOVER EFFECTS --- */
+			.aura-black-card:hover {
+				transform: translateY(-10px);
+				border-color: #ffc107;
+				box-shadow: 0 20px 40px rgba(255, 193, 7, 0.2);
+			}
+
+			.aura-black-card:hover .icon-sphere {
+				background: #ffc107;
+				color: #000;
+				transform: rotateY(180deg) scale(1.1);
+				box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+			}
+
+			/* Gold Glow Effect */
+			.card-glow {
+				position: absolute;
+				top: 0; left: 0; width: 100%; height: 100%;
+				background: radial-gradient(circle at 50% 0%, rgba(255, 193, 7, 0.15), transparent 70%);
+				opacity: 0;
+				transition: 0.4s;
+				pointer-events: none;
+			}
+
+			.aura-black-card:hover .card-glow { opacity: 1; }
+
+			/* --- ANIMATIONS --- */
+			@keyframes dot-pulse {
+				0% { transform: scale(1); opacity: 1; }
+				50% { transform: scale(1.5); opacity: 0.5; }
+				100% { transform: scale(1); opacity: 1; }
+			}
+
+			@keyframes popIn {
+				from { opacity: 0; transform: scale(0.9) translateY(20px); }
+				to { opacity: 1; transform: scale(1) translateY(0); }
+			}
+			.animate-pop-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; }
+
+			/* --- MOBILE OPTIMIZATION --- */
+			@media (max-width: 576px) {
+				.aura-black-card { padding: 25px 10px; border-radius: 20px; }
+				.icon-sphere { width: 50px; height: 50px; font-size: 1.4rem; border-radius: 14px; }
+				.aura-black-card h5 { font-size: 0.95rem; }
+				.card-hint { font-size: 0.65rem; }
+			}
+		</style>
+	</section>
+</body>
+</html>

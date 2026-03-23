@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Product | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container">
+				
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+						
+						<div class="premium-white-card">
+							
+							<div class="text-center mb-5">
+								<h2 class="fw-bold text-dark mb-1">Add <span class="text-warning">Product</span></h2>
+								<p class="text-muted small text-uppercase fw-semibold tracking-wider">AuraMart Inventory</p>
+								<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+							</div>
+
+							<th:block th:if="${session.succMsg}">
+								<div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-check fs-4 me-3 text-success"></i>
+									<div class="fw-semibold text-success">[[${session.succMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg}">
+								<div class="alert alert-danger d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-exclamation fs-4 me-3 text-danger"></i>
+									<div class="fw-semibold text-danger">[[${session.errorMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<form action="/admin/saveProduct" method="post" enctype="multipart/form-data">
+								
+								<div class="mb-4 input-anim">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-tag me-2 text-warning"></i>Product Title</label> 
+									<input type="text" name="title" class="form-control premium-input" placeholder="Enter product title" required>
+								</div>
+
+								<div class="mb-4 input-anim" style="animation-delay: 0.1s;">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-align-left me-2 text-warning"></i>Description</label>
+									<textarea rows="3" class="form-control premium-input" name="description" placeholder="Write a short description..." required></textarea>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.2s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-folder-tree me-2 text-warning"></i>Category</label> 
+										<select class="form-select premium-input" name="category" required>
+											<option selected disabled value="">-- Select Category --</option>
+											<option th:each="c:${categories}">[[${c.name}]]</option>
+										</select>
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.3s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-indian-rupee-sign me-2 text-warning"></i>Price</label> 
+										<input type="number" name="price" class="form-control premium-input" placeholder="0.00" required>
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.4s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-boxes-stacked me-2 text-warning"></i>Stock</label> 
+										<input type="text" name="stock" class="form-control premium-input" placeholder="Quantity available" required>
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.5s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-image me-2 text-warning"></i>Upload Image</label> 
+										<input type="file" name="file" class="form-control premium-input" required>
+									</div>
+								</div>
+
+								<div class="mb-5 input-anim" style="animation-delay: 0.6s;">
+									<label class="form-label fw-bold text-dark d-block mb-3"><i class="fa-solid fa-toggle-on me-2 text-warning"></i>Status</label>
+									
+									<div class="d-flex gap-4 p-3 rounded-3" style="background-color: #f8f9fa; border: 1px solid #e9ecef;">
+										<div class="form-check">
+											<input class="form-check-input custom-radio" type="radio" checked value="true" name="isActive" id="statusActive">
+											<label class="form-check-label fw-semibold text-dark" for="statusActive">Active</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input custom-radio" type="radio" value="false" name="isActive" id="statusInactive">
+											<label class="form-check-label fw-semibold text-dark" for="statusInactive">Inactive</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="input-anim" style="animation-delay: 0.7s;">
+									<button type="submit" class="btn w-100 py-3 fw-bold fs-5 shadow-sm submit-btn">
+										<i class="fa-solid fa-cloud-arrow-up me-2"></i> Submit Product
+									</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 24px;
+				padding: 40px;
+				box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+				transition: transform 0.3s ease;
+			}
+
+			.premium-white-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+			}
+
+			.premium-input {
+				background-color: #f8f9fa;
+				border: 1px solid #e9ecef;
+				border-radius: 12px;
+				padding: 12px 16px;
+				color: #212529;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+
+			.premium-input:focus {
+				background-color: #ffffff;
+				border-color: #ffc107;
+				box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.15);
+				outline: none;
+			}
+
+			.premium-input::placeholder {
+				color: #adb5bd;
+				font-weight: 400;
+			}
+
+			.custom-radio:checked {
+				background-color: #ffc107;
+				border-color: #ffc107;
+			}
+
+			.custom-radio:focus {
+				box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.25);
+			}
+
+			.submit-btn {
+				background-color: #ffc107;
+				color: #000;
+				border-radius: 12px;
+				border: none;
+				transition: all 0.3s ease;
+			}
+
+			.submit-btn:hover {
+				background-color: #ffca2c;
+				transform: translateY(-3px);
+				box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3) !important;
+			}
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+
+			@media (max-width: 768px) {
+				.premium-white-card {
+					padding: 25px 20px;
+					border-radius: 20px;
+				}
+			}
+		</style>
+	</section>
+</body>
+</html>

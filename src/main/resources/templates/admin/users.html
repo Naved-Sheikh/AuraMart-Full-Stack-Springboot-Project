@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Management | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container-fluid px-lg-4">
+				
+				<div class="d-flex justify-content-between align-items-center mb-4 animate-slide-down">
+					<a href="/admin/" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-bold shadow-sm action-btn">
+						<i class="fa-solid fa-arrow-left me-2"></i> Dashboard
+					</a>
+				</div>
+
+				<div class="text-center mb-5 animate-slide-down">
+					<h2 class="fw-bold text-dark mb-1" th:if="${userType==1}">Manage <span class="text-warning">Users</span></h2>
+					<h2 class="fw-bold text-dark mb-1" th:if="${userType==2}">Manage <span class="text-warning">Admins</span></h2>
+					<p class="text-muted small text-uppercase fw-semibold tracking-wider">AuraMart Account Control</p>
+					<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+				</div>
+
+				<div class="row justify-content-center mb-4 input-anim">
+					<div class="col-md-8 col-lg-6">
+						<th:block th:if="${session.succMsg}">
+							<div class="alert alert-success d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-check fs-5 me-3 text-success"></i>
+								<div class="fw-semibold text-success small">[[${session.succMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+
+						<th:block th:if="${session.errorMsg}">
+							<div class="alert alert-danger d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-exclamation fs-5 me-3 text-danger"></i>
+								<div class="fw-semibold text-danger small">[[${session.errorMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+					</div>
+				</div>
+
+				<div class="row input-anim" style="animation-delay: 0.1s;">
+					<div class="col-12">
+						<div class="premium-white-card p-0 overflow-hidden">
+							
+							<div class="table-responsive p-4">
+								<table class="table custom-table align-middle mb-0">
+									<thead>
+										<tr>
+											<th scope="col" class="text-center">Sl No</th>
+											<th scope="col" class="text-center">Profile</th>
+											<th scope="col" style="min-width: 250px;">User Info</th>
+											<th scope="col" style="min-width: 250px;">Location</th>
+											<th scope="col" class="text-center">Account Status</th>
+											<th scope="col" class="text-center" style="min-width: 180px;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="u,c:${users}">
+											<th scope="row" class="text-muted text-center">[[${c.count}]]</th>
+											<td class="text-center">
+												<img th:src="@{'/img/profile_img/'+${u.profileImage}}" class="rounded-circle shadow-sm border border-2 border-white" width="60px" height="60px" style="object-fit: cover;">
+											</td>
+											<td>
+												<div class="small lh-sm">
+													<span class="fw-bold text-dark fs-6 d-block mb-1">[[${u.name}]]</span>
+													<span class="text-muted d-block mb-1"><i class="fa-solid fa-envelope text-warning me-2"></i>[[${u.email}]]</span>
+													<span class="text-muted d-block"><i class="fa-solid fa-phone text-warning me-2"></i>[[${u.mobileNumber}]]</span>
+												</div>
+											</td>
+											<td>
+												<div class="small text-muted lh-sm">
+													<i class="fa-solid fa-map-location-dot text-warning me-2 mb-1"></i>[[${u.address}]]<br>
+													<span class="ms-4">[[${u.city}]], [[${u.state}]] - [[${u.pincode}]]</span>
+												</div>
+											</td>
+											<td class="text-center">
+												<span class="badge px-3 py-2 rounded-pill" th:classappend="${u.isEnable} ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'">
+													<i class="fa-solid me-1" th:classappend="${u.isEnable} ? 'fa-check-circle' : 'fa-ban'"></i> 
+													[[${u.isEnable} ? 'Active' : 'Inactive']]
+												</span>
+											</td>
+											<td class="text-center">
+												<div class="d-flex justify-content-center gap-2">
+													<a th:href="@{'/admin/updateSts?status=true&id='+${u.id}}+'&type='+${userType}" class="btn btn-sm btn-outline-success action-btn fw-bold px-3" th:classappend="${u.isEnable} ? 'disabled' : ''">
+														Activate
+													</a> 
+													<a th:href="@{'/admin/updateSts?status=false&id='+${u.id}}+'&type='+${userType}" class="btn btn-sm btn-outline-danger action-btn fw-bold px-3" th:classappend="${!u.isEnable} ? 'disabled' : ''">
+														Suspend
+													</a>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="px-4 py-3 border-top" style="background-color: #fafbfa;">
+								<p class="mb-0 text-muted small text-center"><i class="fa-solid fa-shield-halved text-warning me-2"></i>Secure User Management Console</p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 20px;
+				box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+				transition: transform 0.3s ease;
+			}
+
+			.action-btn { 
+				border-radius: 8px; 
+				transition: all 0.2s ease; 
+			}
+			
+			.action-btn:hover:not(.disabled) { 
+				transform: translateY(-2px); 
+				box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+			}
+
+			.custom-table th {
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: #6c757d;
+				border-bottom: 2px solid #f8f9fa;
+				padding: 15px 10px;
+				background-color: #ffffff;
+			}
+
+			.custom-table td {
+				padding: 20px 10px;
+				border-bottom: 1px solid #f8f9fa;
+				vertical-align: middle;
+			}
+
+			.custom-table tbody tr { transition: all 0.2s ease; }
+
+			.custom-table tbody tr:hover {
+				background-color: #fcfdfd;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+			}
+
+			@keyframes slideDown {
+				from { opacity: 0; transform: translateY(-20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.animate-slide-down { animation: slideDown 0.6s ease-out; }
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+		</style>
+	</section>
+</body>
+</html>

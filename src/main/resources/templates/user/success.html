@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Aura Mart | Order Successful</title>
+</head>
+<body>
+	<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 80vh; display: flex; align-items: center;">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-lg-6 text-center">
+					<div class="card shadow-lg border-0 rounded-4 p-5">
+						
+						<div class="mb-4">
+							<i class="fa-solid fa-circle-check text-success" style="font-size: 5rem;"></i>
+						</div>
+						
+						<h1 class="fw-bold text-dark mb-3">Order Placed Successfully!</h1>
+						<p class="text-secondary mb-4 fs-5">
+							Thank you for shopping with Aura Mart. Your order has been received and is being processed. 
+							We've sent a confirmation email with your order details.
+						</p>
+						
+						<div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+							<a href="/user/user-orders" class="btn btn-warning text-dark rounded-pill px-4 py-2 fw-bold shadow-sm border border-warning">
+								<i class="fa-solid fa-box me-2"></i> View My Orders
+							</a>
+							<a href="/products" class="btn btn-dark text-white rounded-pill px-4 py-2 fw-bold shadow-sm">
+								<i class="fa-solid fa-cart-shopping me-2"></i> Continue Shopping
+							</a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

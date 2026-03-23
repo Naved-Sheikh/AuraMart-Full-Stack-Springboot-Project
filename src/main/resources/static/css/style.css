@@ -1,0 +1,69 @@
+@charset "ISO-8859-1";
+
+/* --- Basic Classes --- */
+.card-sh { box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3); }
+.cat-div { box-shadow: 0 0 10px rgba(0, 0, 0, .1); }
+.error { color: red; }
+
+/* --- Global Hover for Icons/Buttons --- */
+.transition-hover {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+.transition-hover:hover {
+    transform: scale(1.15);
+    color: #000 !important;
+    background-color: #ffc107 !important;
+}
+
+/* =========================================
+   --- HOMEPAGE CATEGORY ANIMATIONS --- 
+   ========================================= */
+
+/* 1. Category Icons (Mobile, Laptop, etc.) */
+.category-wrapper {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+
+/* Targetting the 'group' class from index.html */
+.group:hover .category-wrapper {
+    transform: scale(1.2) rotate(5deg) !important;
+}
+
+.group:hover img {
+    border: 2px solid #ffc107 !important;
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.4) !important;
+}
+
+.group:hover p {
+    color: #ffc107 !important;
+    font-weight: bold;
+    transform: translateY(2px);
+}
+
+/* =========================================
+   --- LATEST PRODUCT CARDS --- 
+   ========================================= */
+.custom-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.custom-card:hover {
+    transform: translateY(-15px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid #ffc107 !important;
+}
+
+.custom-card:hover img {
+    transform: scale(1.1);
+    transition: all 0.4s ease;
+}
+
+/* Button inside card turns yellow on hover */
+.custom-card:hover .btn-dark {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    border: none;
+    transform: scale(1.05);
+}

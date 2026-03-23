@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Admin | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container">
+				
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+						
+						<div class="premium-white-card">
+							
+							<div class="text-center mb-5">
+								<h2 class="fw-bold text-dark mb-1">Add <span class="text-warning">Admin</span></h2>
+								<p class="text-muted small text-uppercase fw-semibold tracking-wider">Expand Management Team</p>
+								<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+							</div>
+
+							<th:block th:if="${session.succMsg}">
+								<div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-check fs-4 me-3 text-success"></i>
+									<div class="fw-semibold text-success">[[${session.succMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg}">
+								<div class="alert alert-danger d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-exclamation fs-4 me-3 text-danger"></i>
+									<div class="fw-semibold text-danger">[[${session.errorMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<form action="/admin/save-admin" enctype="multipart/form-data" method="post">
+								
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-user me-2 text-warning"></i>Full Name</label> 
+										<input required class="form-control premium-input" name="name" type="text" placeholder="Enter full name">
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.1s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-phone me-2 text-warning"></i>Mobile Number</label> 
+										<input required class="form-control premium-input" name="mobileNumber" type="number" placeholder="10-digit mobile number">
+									</div>
+								</div>
+
+								<div class="mb-4 input-anim" style="animation-delay: 0.2s;">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-envelope me-2 text-warning"></i>Email Address</label> 
+									<input required class="form-control premium-input" name="email" type="email" placeholder="admin@example.com">
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.3s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-map-location-dot me-2 text-warning"></i>Address</label> 
+										<input required class="form-control premium-input" name="address" type="text" placeholder="Street address">
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.4s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-city me-2 text-warning"></i>City</label> 
+										<input required class="form-control premium-input" name="city" type="text" placeholder="City name">
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.5s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-map me-2 text-warning"></i>State</label> 
+										<input required class="form-control premium-input" name="state" type="text" placeholder="State name">
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.6s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-thumbtack me-2 text-warning"></i>Pincode</label> 
+										<input required class="form-control premium-input" name="pincode" type="number" placeholder="6-digit pincode">
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.7s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-lock me-2 text-warning"></i>Password</label> 
+										<input required class="form-control premium-input" name="password" type="password" placeholder="Create a strong password">
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.8s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-shield-halved me-2 text-warning"></i>Confirm Password</label> 
+										<input required class="form-control premium-input" name="cpassword" type="password" placeholder="Retype password">
+									</div>
+								</div>
+
+								<div class="mb-5 input-anim" style="animation-delay: 0.9s;">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-image-portrait me-2 text-warning"></i>Profile Image</label> 
+									<input class="form-control premium-input" name="img" type="file">
+								</div>
+
+								<div class="input-anim" style="animation-delay: 1s;">
+									<button type="submit" class="btn w-100 py-3 fw-bold fs-5 shadow-sm submit-btn text-dark">
+										<i class="fa-solid fa-user-plus me-2"></i> Register Admin
+									</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 24px;
+				padding: 40px;
+				box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+				transition: transform 0.3s ease;
+			}
+
+			.premium-white-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+			}
+
+			.premium-input {
+				background-color: #f8f9fa;
+				border: 1px solid #e9ecef;
+				border-radius: 12px;
+				padding: 12px 16px;
+				color: #212529;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+
+			.premium-input:focus {
+				background-color: #ffffff;
+				border-color: #ffc107;
+				box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.15);
+				outline: none;
+			}
+
+			.premium-input::placeholder {
+				color: #adb5bd;
+				font-weight: 400;
+			}
+
+			.submit-btn {
+				background-color: #ffc107;
+				color: #000;
+				border-radius: 12px;
+				border: none;
+				transition: all 0.3s ease;
+			}
+
+			.submit-btn:hover {
+				background-color: #ffca2c;
+				transform: translateY(-3px);
+				box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3) !important;
+			}
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+
+			@media (max-width: 768px) {
+				.premium-white-card {
+					padding: 25px 20px;
+					border-radius: 20px;
+				}
+			}
+		</style>
+	</section>
+</body>
+</html>

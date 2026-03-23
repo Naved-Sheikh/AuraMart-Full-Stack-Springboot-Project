@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>All Products | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container-fluid px-lg-4">
+				
+				<div class="d-flex justify-content-between align-items-center mb-4 animate-slide-down">
+					<a href="/admin/" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-bold shadow-sm action-btn">
+						<i class="fa-solid fa-arrow-left me-2"></i> Dashboard
+					</a>
+				</div>
+
+				<div class="text-center mb-5 animate-slide-down">
+					<h2 class="fw-bold text-dark mb-1">Inventory <span class="text-warning">Management</span></h2>
+					<p class="text-muted small text-uppercase fw-semibold tracking-wider">All Products List</p>
+					<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+				</div>
+
+				<div class="row justify-content-center mb-4 input-anim">
+					<div class="col-md-8 col-lg-6">
+						<th:block th:if="${session.succMsg}">
+							<div class="alert alert-success d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-check fs-5 me-3 text-success"></i>
+								<div class="fw-semibold text-success small">[[${session.succMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+
+						<th:block th:if="${session.errorMsg}">
+							<div class="alert alert-danger d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-exclamation fs-5 me-3 text-danger"></i>
+								<div class="fw-semibold text-danger small">[[${session.errorMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+
+						<div class="premium-white-card p-3 p-md-4 mb-4">
+							<form action="/admin/products" method="get" class="d-flex flex-column flex-md-row gap-2">
+								<div class="input-group input-group-lg w-100">
+									<span class="input-group-text bg-white border-end-0 text-muted ps-4"><i class="fa-solid fa-magnifying-glass"></i></span>
+									<input type="text" class="form-control premium-input border-start-0 ps-0" name="ch" placeholder="Search products by title..." required>
+								</div>
+								<button class="btn fw-bold px-4 submit-btn flex-shrink-0">Search</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="row input-anim" style="animation-delay: 0.1s;">
+					<div class="col-12">
+						<div class="premium-white-card p-0 overflow-hidden">
+							
+							<div class="table-responsive p-4">
+								<table class="table custom-table align-middle mb-0">
+									<thead>
+										<tr>
+											<th scope="col" class="text-center">Sl No</th>
+											<th scope="col">Image</th>
+											<th scope="col" style="min-width: 200px;">Title</th>
+											<th scope="col">Category</th>
+											<th scope="col">Base Price</th>
+											<th scope="col">Discount</th>
+											<th scope="col">Final Price</th>
+											<th scope="col">Status</th>
+											<th scope="col">Stock</th>
+											<th scope="col" style="min-width: 180px;" class="text-center">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="p,c:${products}">
+											<th scope="row" class="text-muted text-center">[[${c.count}]]</th>
+											<td>
+												<img th:src="${p.image}" class="rounded-3 shadow-sm border" width="60px" height="60px" style="object-fit: cover;">
+											</td>
+											<td class="fw-bold text-dark">[[${p.title}]]</td>
+											<td>
+												<span class="badge bg-light text-dark border px-2 py-1">[[${p.category}]]</span>
+											</td>
+											<td class="text-muted fw-semibold">₹[[${p.price}]]</td>
+											<td class="text-danger fw-semibold">[[${p.discount}]]%</td>
+											<td class="text-success fw-bold fs-6">₹[[${p.discountPrice}]]</td>
+											<td>
+												<span class="badge px-2 py-1" th:classappend="${p.isActive} ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'">
+													[[${p.isActive} ? 'Active' : 'Inactive']]
+												</span>
+											</td>
+											<td>
+												<span class="fw-bold" th:classappend="${p.stock > 10} ? 'text-dark' : 'text-danger'">[[${p.stock}]]</span>
+											</td>
+											<td class="text-center">
+												<a th:href="@{'/admin/editProduct/'+${p.id}}" class="btn btn-sm btn-dark action-btn me-1">
+													<i class="fa-solid fa-pen-to-square"></i> Edit
+												</a> 
+												<a th:href="@{'/admin/deleteProduct/'+${p.id}}" class="btn btn-sm btn-outline-danger action-btn">
+													<i class="fa-solid fa-trash"></i>
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="d-flex flex-column flex-md-row justify-content-between align-items-center px-4 py-3 border-top" style="background-color: #fafbfa;">
+								<div class="mb-3 mb-md-0 fw-bold text-muted">
+									Total Products: <span class="text-dark fs-5">[[${totalElements}]]</span>
+								</div>
+								
+								<nav aria-label="Page navigation">
+									<ul class="pagination custom-pagination mb-0">
+										<li class="page-item" th:classappend="${isFirst} ? 'disabled':''">
+											<a class="page-link" th:href="@{'/admin/products?pageNo='+${pageNo-1}}" aria-label="Previous"> 
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+
+										<li th:each="i:${#numbers.sequence(1,totalPages)}" class="page-item" th:classappend="${pageNo+1==i}?'active':''">
+											<a class="page-link" th:href="@{'/admin/products?pageNo='+${i-1}}">[[${i}]]</a>
+										</li>
+
+										<li class="page-item" th:classappend="${isLast} ? 'disabled':''">
+											<a class="page-link" th:href="@{'/admin/products?pageNo='+${pageNo+1}}" aria-label="Next"> 
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 20px;
+				box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+				transition: transform 0.3s ease;
+			}
+
+			.premium-input {
+				background-color: #f8f9fa;
+				border: 1px solid #e9ecef;
+				color: #212529;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+			
+			.input-group-lg .premium-input {
+				border-radius: 0 12px 12px 0;
+			}
+			
+			.input-group-lg .input-group-text {
+				border-radius: 12px 0 0 12px;
+				border: 1px solid #e9ecef;
+			}
+
+			.premium-input:focus {
+				background-color: #ffffff;
+				border-color: #ffc107;
+				box-shadow: none;
+				outline: none;
+			}
+
+			.submit-btn {
+				background-color: #ffc107;
+				color: #000;
+				border-radius: 12px;
+				border: none;
+				transition: all 0.3s ease;
+			}
+
+			.submit-btn:hover {
+				background-color: #ffca2c;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 15px rgba(255, 193, 7, 0.2) !important;
+			}
+
+			.action-btn { transition: all 0.2s ease; border-radius: 8px; padding: 6px 12px; font-weight: 600;}
+			.action-btn:hover { transform: translateY(-2px); }
+
+			.custom-table th {
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: #6c757d;
+				border-bottom: 2px solid #f8f9fa;
+				padding: 15px 10px;
+				background-color: #ffffff;
+			}
+
+			.custom-table td {
+				padding: 15px 10px;
+				border-bottom: 1px solid #f8f9fa;
+				vertical-align: middle;
+			}
+
+			.custom-table tbody tr { transition: all 0.2s ease; }
+
+			.custom-table tbody tr:hover {
+				background-color: #fcfdfd;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+			}
+
+			.custom-pagination .page-link {
+				color: #212529;
+				border: none;
+				margin: 0 4px;
+				border-radius: 8px;
+				font-weight: 600;
+				transition: all 0.2s;
+			}
+
+			.custom-pagination .page-link:hover {
+				background-color: #f8f9fa;
+				color: #ffc107;
+			}
+
+			.custom-pagination .page-item.active .page-link {
+				background-color: #ffc107;
+				color: #000;
+				box-shadow: 0 5px 10px rgba(255, 193, 7, 0.3);
+			}
+
+			.custom-pagination .page-item.disabled .page-link {
+				background-color: transparent;
+				color: #ced4da;
+			}
+
+			@keyframes slideDown {
+				from { opacity: 0; transform: translateY(-20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.animate-slide-down { animation: slideDown 0.6s ease-out; }
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+		</style>
+	</section>
+</body>
+</html>

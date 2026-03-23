@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>All Orders | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container-fluid px-lg-4">
+				
+				<div class="d-flex justify-content-between align-items-center mb-4 animate-slide-down">
+					<a href="/admin/" class="btn btn-sm btn-outline-dark rounded-pill px-3 fw-bold shadow-sm action-btn">
+						<i class="fa-solid fa-arrow-left me-2"></i> Dashboard
+					</a>
+				</div>
+
+				<div class="text-center mb-5 animate-slide-down">
+					<h2 class="fw-bold text-dark mb-1">Manage <span class="text-warning">Orders</span></h2>
+					<p class="text-muted small text-uppercase fw-semibold tracking-wider">Track and Update Deliveries</p>
+					<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+				</div>
+
+				<div class="row justify-content-center mb-4 input-anim">
+					<div class="col-md-8 col-lg-6">
+						<th:block th:if="${session.succMsg}">
+							<div class="alert alert-success d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-check fs-5 me-3 text-success"></i>
+								<div class="fw-semibold text-success small">[[${session.succMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+
+						<th:block th:if="${session.errorMsg}">
+							<div class="alert alert-danger d-flex align-items-center mb-3 border-0 shadow-sm rounded-3">
+								<i class="fa-solid fa-circle-exclamation fs-5 me-3 text-danger"></i>
+								<div class="fw-semibold text-danger small">[[${session.errorMsg}]]</div>
+							</div>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</th:block>
+
+						<div class="premium-white-card p-3 p-md-4 mb-4">
+							<form action="/admin/search-order" method="get" class="d-flex flex-column flex-md-row gap-2">
+								<div class="input-group input-group-lg w-100">
+									<span class="input-group-text bg-white border-end-0 text-muted ps-4"><i class="fa-solid fa-magnifying-glass"></i></span>
+									<input type="text" class="form-control premium-input border-start-0 ps-0" name="orderId" placeholder="Search by Order ID..." required>
+								</div>
+								<button class="btn fw-bold px-4 submit-btn flex-shrink-0">Search Order</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="row input-anim" style="animation-delay: 0.1s;">
+					<div class="col-12">
+						<div class="premium-white-card p-0 overflow-hidden">
+							
+							<div class="table-responsive p-4">
+								<table class="table custom-table align-middle mb-0">
+									<thead>
+										<tr>
+											<th scope="col" class="text-nowrap">Order ID</th>
+											<th scope="col" style="min-width: 250px;">Delivery Details</th>
+											<th scope="col" class="text-nowrap">Date</th>
+											<th scope="col" style="min-width: 150px;">Product</th>
+											<th scope="col" class="text-nowrap">Payment Summary</th>
+											<th scope="col">Status</th>
+											<th scope="col" style="min-width: 200px;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+										<th:block th:if="${srch}">
+											<th:block th:if="${orderDtls!=null}">
+												<tr>
+													<th scope="row" class="text-dark">[[${orderDtls.orderId}]]</th>
+													<td>
+														<div class="small lh-sm text-muted">
+															<span class="fw-bold text-dark d-block mb-1">[[${orderDtls.orderAddress.firstName+' '+orderDtls.orderAddress.lastName}]]</span>
+															<i class="fa-solid fa-envelope me-1"></i> [[${orderDtls.orderAddress.email}]]<br>
+															<i class="fa-solid fa-phone me-1"></i> [[${orderDtls.orderAddress.mobileNo}]]<br>
+															<i class="fa-solid fa-location-dot me-1"></i> [[${orderDtls.orderAddress.address}]], [[${orderDtls.orderAddress.city}]], [[${orderDtls.orderAddress.state}]] - [[${orderDtls.orderAddress.pincode}]]
+														</div>
+													</td>
+													<td class="text-nowrap text-muted small">[[${orderDtls.orderDate}]]</td>
+													<td class="fw-semibold text-dark">[[${orderDtls.product.title}]]</td>
+													<td class="small text-muted">
+														Qty: <span class="fw-bold text-dark">[[${orderDtls.quantity}]]</span><br>
+														Price: <span class="fw-bold text-dark">₹[[${orderDtls.price}]]</span><br>
+														<span class="text-success fw-bold">Total: ₹[[${orderDtls.quantity * orderDtls.price}]]</span>
+													</td>
+													<td>
+														<span class="badge bg-warning-subtle text-dark border border-warning px-2 py-1">[[${orderDtls.status}]]</span>
+													</td>
+													<td>
+														<form action="/admin/update-order-status" method="post">
+															<input th:value="${orderDtls.id}" name="id" type="hidden">
+															<div class="input-group input-group-sm">
+																<select class="form-select premium-input py-1" name="st" style="border-radius: 8px 0 0 8px;">
+																	<option disabled selected>-- Status --</option>
+																	<option value="1">In Progress</option>
+																	<option value="2">Order Received</option>
+																	<option value="3">Product Packed</option>
+																	<option value="4">Out for Delivery</option>
+																	<option value="5">Delivered</option>
+																	<option value="6">Cancelled</option>
+																</select>
+																<button class="btn btn-dark fw-bold px-3" style="border-radius: 0 8px 8px 0;" th:classappend="${orderDtls.status=='Cancelled' || orderDtls.status=='Delivered'} ? 'disabled' : ''">Update</button>
+															</div>
+														</form>
+													</td>
+												</tr>
+											</th:block>
+											<th:block th:unless="${orderDtls!=null}">
+												<tr>
+													<td colspan="7" class="text-center py-5">
+														<div class="text-danger">
+															<i class="fa-solid fa-triangle-exclamation fs-1 mb-3"></i>
+															<h5 class="fw-bold">[[${errorMsg}]]</h5>
+															<p class="text-muted small">Please check the Order ID and try again.</p>
+														</div>
+													</td>
+												</tr>
+											</th:block>
+										</th:block>
+
+										<th:block th:unless="${srch}">
+											<tr th:each="o:${orders}">
+												<th scope="row" class="text-dark">[[${o.orderId}]]</th>
+												<td>
+													<div class="small lh-sm text-muted">
+														<span class="fw-bold text-dark d-block mb-1">[[${o.orderAddress.firstName+' '+o.orderAddress.lastName}]]</span>
+														<i class="fa-solid fa-envelope me-1"></i> [[${o.orderAddress.email}]]<br>
+														<i class="fa-solid fa-phone me-1"></i> [[${o.orderAddress.mobileNo}]]<br>
+														<i class="fa-solid fa-location-dot me-1 mt-1"></i> [[${o.orderAddress.address}]], [[${o.orderAddress.city}]], [[${o.orderAddress.state}]] - [[${o.orderAddress.pincode}]]
+													</div>
+												</td>
+												<td class="text-nowrap text-muted small">[[${o.orderDate}]]</td>
+												<td class="fw-semibold text-dark">[[${o.product.title}]]</td>
+												<td class="small text-muted">
+													Qty: <span class="fw-bold text-dark">[[${o.quantity}]]</span><br>
+													Price: <span class="fw-bold text-dark">₹[[${o.price}]]</span><br>
+													<span class="text-success fw-bold d-block mt-1">Total: ₹[[${o.quantity * o.price}]]</span>
+												</td>
+												<td>
+													<span class="badge bg-warning-subtle text-dark border border-warning px-2 py-1">[[${o.status}]]</span>
+												</td>
+												<td>
+													<form action="/admin/update-order-status" method="post">
+														<input th:value="${o.id}" name="id" type="hidden">
+														<div class="input-group input-group-sm">
+															<select class="form-select premium-input py-1" name="st" style="border-radius: 8px 0 0 8px;">
+																<option disabled selected>-- Status --</option>
+																<option value="1">In Progress</option>
+																<option value="2">Order Received</option>
+																<option value="3">Product Packed</option>
+																<option value="4">Out for Delivery</option>
+																<option value="5">Delivered</option>
+																<option value="6">Cancelled</option>
+															</select>
+															<button class="btn btn-dark fw-bold px-3" style="border-radius: 0 8px 8px 0;" th:classappend="${o.status=='Cancelled' || o.status=='Delivered'} ? 'disabled' : ''">Update</button>
+														</div>
+													</form>
+												</td>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+							</div>
+
+							<th:block th:if="${!srch}">
+								<div class="d-flex flex-column flex-md-row justify-content-between align-items-center px-4 py-3 border-top" style="background-color: #fafbfa;">
+									<div class="mb-3 mb-md-0 fw-bold text-muted">
+										Total Orders: <span class="text-dark fs-5">[[${totalElements}]]</span>
+									</div>
+									
+									<nav aria-label="Page navigation">
+										<ul class="pagination custom-pagination mb-0">
+											<li class="page-item" th:classappend="${isFirst} ? 'disabled':''">
+												<a class="page-link" th:href="@{'/admin/orders?pageNo='+${pageNo-1}}" aria-label="Previous"> 
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+
+											<li th:each="i:${#numbers.sequence(1,totalPages)}" class="page-item" th:classappend="${pageNo+1==i}?'active':''">
+												<a class="page-link" th:href="@{'/admin/orders?pageNo='+${i-1}}">[[${i}]]</a>
+											</li>
+
+											<li class="page-item" th:classappend="${isLast} ? 'disabled':''">
+												<a class="page-link" th:href="@{'/admin/orders?pageNo='+${pageNo+1}}" aria-label="Next"> 
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</th:block>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 20px;
+				box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+				transition: transform 0.3s ease;
+			}
+
+			.premium-input {
+				background-color: #f8f9fa;
+				border: 1px solid #e9ecef;
+				color: #212529;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+			
+			.input-group-lg .premium-input {
+				border-radius: 0 12px 12px 0;
+			}
+			
+			.input-group-lg .input-group-text {
+				border-radius: 12px 0 0 12px;
+				border: 1px solid #e9ecef;
+			}
+
+			.premium-input:focus {
+				background-color: #ffffff;
+				border-color: #ffc107;
+				box-shadow: none;
+				outline: none;
+			}
+
+			.submit-btn {
+				background-color: #ffc107;
+				color: #000;
+				border-radius: 12px;
+				border: none;
+				transition: all 0.3s ease;
+			}
+
+			.submit-btn:hover {
+				background-color: #ffca2c;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 15px rgba(255, 193, 7, 0.2) !important;
+			}
+
+			.action-btn { transition: all 0.2s ease; }
+			.action-btn:hover { transform: translateX(-3px); }
+
+			.custom-table th {
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: #6c757d;
+				border-bottom: 2px solid #f8f9fa;
+				padding: 15px 10px;
+				background-color: #ffffff;
+			}
+
+			.custom-table td {
+				padding: 20px 10px;
+				border-bottom: 1px solid #f8f9fa;
+				vertical-align: middle;
+			}
+
+			.custom-table tbody tr { transition: all 0.2s ease; }
+
+			.custom-table tbody tr:hover {
+				background-color: #fcfdfd;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+			}
+
+			.custom-pagination .page-link {
+				color: #212529;
+				border: none;
+				margin: 0 4px;
+				border-radius: 8px;
+				font-weight: 600;
+				transition: all 0.2s;
+			}
+
+			.custom-pagination .page-link:hover {
+				background-color: #f8f9fa;
+				color: #ffc107;
+			}
+
+			.custom-pagination .page-item.active .page-link {
+				background-color: #ffc107;
+				color: #000;
+				box-shadow: 0 5px 10px rgba(255, 193, 7, 0.3);
+			}
+
+			.custom-pagination .page-item.disabled .page-link {
+				background-color: transparent;
+				color: #ced4da;
+			}
+
+			@keyframes slideDown {
+				from { opacity: 0; transform: translateY(-20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.animate-slide-down { animation: slideDown 0.6s ease-out; }
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+		</style>
+	</section>
+</body>
+</html>

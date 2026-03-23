@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit Product | AuraMart</title>
+</head>
+<body>
+	<section>
+		<div class="py-5 px-3" style="background-color: #f4f7f6; min-height: 100vh;">
+			<div class="container">
+				
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+						
+						<div class="premium-white-card">
+							
+							<div class="text-center mb-5">
+								<h2 class="fw-bold text-dark mb-1">Edit <span class="text-warning">Product</span></h2>
+								<p class="text-muted small text-uppercase fw-semibold tracking-wider">Update Product Details</p>
+								<div class="mx-auto" style="width: 50px; height: 3px; background-color: #ffc107; border-radius: 10px;"></div>
+							</div>
+
+							<th:block th:if="${session.succMsg}">
+								<div class="alert alert-success d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-check fs-4 me-3 text-success"></i>
+									<div class="fw-semibold text-success">[[${session.succMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg}">
+								<div class="alert alert-danger d-flex align-items-center mb-4 border-0 shadow-sm rounded-3">
+									<i class="fa-solid fa-circle-exclamation fs-4 me-3 text-danger"></i>
+									<div class="fw-semibold text-danger">[[${session.errorMsg}]]</div>
+								</div>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<form action="/admin/updateProduct" method="post" enctype="multipart/form-data">
+								
+								<input type="hidden" name="id" th:value="${product.id}">
+
+								<div class="mb-4 input-anim">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-tag me-2 text-warning"></i>Product Title</label> 
+									<input type="text" name="title" th:value="${product.title}" class="form-control premium-input" required>
+								</div>
+
+								<div class="mb-4 input-anim" style="animation-delay: 0.1s;">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-align-left me-2 text-warning"></i>Description</label>
+									<textarea rows="3" class="form-control premium-input" name="description" required>[[${product.description}]]</textarea>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.2s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-folder-tree me-2 text-warning"></i>Category</label> 
+										<select class="form-select premium-input" name="category" required>
+											<option selected>[[${product.category}]]</option>
+											<option th:each="c:${categories}">[[${c.name}]]</option>
+										</select>
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.3s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-indian-rupee-sign me-2 text-warning"></i>Price</label> 
+										<input type="number" name="price" th:value="${product.price}" class="form-control premium-input" required>
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.4s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-percent me-2 text-warning"></i>Discount (%)</label> 
+										<input type="number" name="discount" th:value="${product.discount}" class="form-control premium-input" required>
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.5s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-tags me-2 text-warning"></i>Discount Price</label> 
+										<input type="number" readonly th:value="${product.discountPrice}" class="form-control premium-input readonly-input">
+									</div>
+								</div>
+
+								<div class="row mb-4">
+									<div class="col-md-6 mb-4 mb-md-0 input-anim" style="animation-delay: 0.6s;">
+										<label class="form-label fw-bold text-dark"><i class="fa-solid fa-boxes-stacked me-2 text-warning"></i>Stock</label> 
+										<input type="text" name="stock" th:value="${product.stock}" class="form-control premium-input" required>
+									</div>
+
+									<div class="col-md-6 input-anim" style="animation-delay: 0.7s;">
+										<label class="form-label fw-bold text-dark d-block mb-3"><i class="fa-solid fa-toggle-on me-2 text-warning"></i>Status</label>
+										<div class="d-flex gap-4 p-2 rounded-3" style="background-color: #f8f9fa; border: 1px solid #e9ecef; min-height: 48px; align-items: center;">
+											<div class="form-check mb-0 ms-2">
+												<input class="form-check-input custom-radio" type="radio" th:checked="${product.isActive==true}" value="true" name="isActive" id="flexRadioDefault1">
+												<label class="form-check-label fw-semibold text-dark" for="flexRadioDefault1">Active</label>
+											</div>
+											<div class="form-check mb-0">
+												<input class="form-check-input custom-radio" type="radio" name="isActive" th:checked="${product.isActive==false}" value="false" id="flexRadioDefault2"> 
+												<label class="form-check-label fw-semibold text-dark" for="flexRadioDefault2">Inactive</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="mb-5 input-anim" style="animation-delay: 0.8s;">
+									<label class="form-label fw-bold text-dark"><i class="fa-solid fa-image me-2 text-warning"></i>Update Product Image</label> 
+									
+									<div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 p-3 rounded-3" style="background-color: #f8f9fa; border: 1px solid #e9ecef;">
+										<div class="position-relative flex-shrink-0">
+											<img th:src="${product.image}" class="rounded-3 shadow-sm border" width="80px" height="80px" style="object-fit: cover;">
+											<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.6rem;">Current</span>
+										</div>
+										<input type="file" name="file" class="form-control premium-input border-0 bg-white w-100">
+									</div>
+								</div>
+
+								<div class="input-anim" style="animation-delay: 0.9s;">
+									<button type="submit" class="btn w-100 py-3 fw-bold fs-5 shadow-sm submit-btn">
+										<i class="fa-solid fa-arrows-rotate me-2"></i> Update Product
+									</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.premium-white-card {
+				background: #ffffff;
+				border-radius: 24px;
+				padding: 40px;
+				box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+				transition: transform 0.3s ease;
+			}
+
+			.premium-white-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+			}
+
+			.premium-input {
+				background-color: #f8f9fa;
+				border: 1px solid #e9ecef;
+				border-radius: 12px;
+				padding: 12px 16px;
+				color: #212529;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+
+			.premium-input:focus {
+				background-color: #ffffff;
+				border-color: #ffc107;
+				box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.15);
+				outline: none;
+			}
+
+			.readonly-input {
+				background-color: #e9ecef !important;
+				color: #6c757d !important;
+				cursor: not-allowed;
+				border-color: #dee2e6;
+			}
+			
+			.readonly-input:focus {
+				box-shadow: none !important;
+				border-color: #dee2e6 !important;
+			}
+
+			.custom-radio:checked {
+				background-color: #ffc107;
+				border-color: #ffc107;
+			}
+
+			.custom-radio:focus {
+				box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.25);
+			}
+
+			.submit-btn {
+				background-color: #ffc107;
+				color: #000;
+				border-radius: 12px;
+				border: none;
+				transition: all 0.3s ease;
+			}
+
+			.submit-btn:hover {
+				background-color: #ffca2c;
+				transform: translateY(-3px);
+				box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3) !important;
+			}
+
+			@keyframes slideUpFade {
+				from { opacity: 0; transform: translateY(20px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+
+			.input-anim {
+				opacity: 0;
+				animation: slideUpFade 0.5s ease forwards;
+			}
+
+			@media (max-width: 768px) {
+				.premium-white-card {
+					padding: 25px 20px;
+					border-radius: 20px;
+				}
+			}
+		</style>
+	</section>
+</body>
+</html>
