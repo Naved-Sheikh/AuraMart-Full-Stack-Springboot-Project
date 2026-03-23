@@ -1,4 +1,4 @@
-````markdown
+
 <h1 align="center"> 🛒 AuraMart - Enterprise-Grade Full-Stack E-Commerce Ecosystem </h1>
 
 <p align="center"> 
