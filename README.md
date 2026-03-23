@@ -1,4 +1,4 @@
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/20fabae1-f22c-4151-802b-15b19f84a8a5" />````markdown
+````markdown
 <h1 align="center"> 🛒 AuraMart - Enterprise-Grade Full-Stack E-Commerce Ecosystem </h1>
 
 <p align="center"> 
@@ -22,6 +22,14 @@
   <a href="https://www.linkedin.com/in/mohd-naved-88b0a9277/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
   <a href="mailto:navedsheikh8859@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
   <a href="https://bit.ly/4rMkxbk"><img src="https://img.shields.io/badge/Live_Deployment-FF9900?style=for-the-badge&logo=amazon-s3&logoColor=black" /></a>
+</p>
+
+---
+
+## 📸 Project Interface & Visuals
+<p align="center">
+  <i><img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/6b0ccaed-1d1f-4b57-8a21-929a3566aa5d" />
+</i>
 </p>
 
 ---
