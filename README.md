@@ -26,33 +26,25 @@
 
 ---
 
-## 📸 Project Interface & Visuals
-<p align="center">
-  <i>(Add your application screenshots here to showcase the UI/UX)</i>
-</p>
-
----
-
 ## 🛠️ Comprehensive Tech Stack
 
 ### Backend Core & Infrastructure
 * **Java 24 (Latest LTS Features):** Utilizing modern syntax for optimal performance.
 * **Spring Boot 3.5.5:** Powering the micro-kernel architecture and dependency injection.
-* **Spring Data JPA & Hibernate 6:** Advanced Object-Relational Mapping (ORM) with lazy loading and optimized query execution.
-* **HikariCP:** High-performance JDBC connection pooling for low-latency database interactions.
+* **Spring Data JPA & Hibernate 6:** Advanced Object-Relational Mapping (ORM) with optimized query execution.
+* **HikariCP:** High-performance JDBC connection pooling for low-latency interactions.
 
 ### Security Framework
 * **Spring Security 6:** Implementing a robust security filter chain.
-* **Google OAuth 2.0:** Integrated Social Login for frictionless user onboarding.
-* **RBAC (Role-Based Access Control):** Granular authorization logic separating `USER` and `ADMIN` privileges.
-* **BCrypt Encryption:** Industry-standard password hashing for maximum data protection.
-* **Environment-Level Secrets:** Zero credential hardcoding; keys are injected via system environment variables.
+* **Google OAuth 2.0:** Integrated Social Login for frictionless onboarding.
+* **RBAC:** Granular authorization logic separating `USER` and `ADMIN` privileges.
+* **BCrypt Encryption:** Industry-standard password hashing.
+* **Environment-Level Secrets:** Keys are injected via system environment variables for maximum safety.
 
 ### Cloud & DevOps (AWS Ecosystem)
-* **AWS Elastic Beanstalk:** Orchestrating automated deployment, capacity provisioning, and load balancing.
-* **AWS RDS (MySQL 8):** Managed relational database with high availability and automated backups.
-* **AWS S3 (Simple Storage Service):** Centralized cloud storage for dynamic product images and user profiles.
-* **Maven:** Automated build lifecycle and dependency management.
+* **AWS Elastic Beanstalk:** Orchestrating automated deployment and load balancing.
+* **AWS RDS (MySQL 8):** Managed relational database with high availability.
+* **AWS S3:** Centralized cloud storage for product images and user profiles.
 
 ---
 
@@ -60,21 +52,21 @@
 
 ### 👤 Advanced User Experience
 * **Persistent Cart Logic:** State-aware shopping cart that survives session transitions.
-* **Automated Notification Engine:** Real-time email triggers via **JavaMailSender** for order confirmations and status changes.
-* **Dynamic UI Rendering:** Powered by **Thymeleaf Fragments** for modular, reusable, and responsive frontend components.
-* **Order Tracking:** Complete transparency with a personalized "My Orders" dashboard.
+* **Automated Notification Engine:** Real-time email triggers via **JavaMailSender** for order updates.
+* **Dynamic UI Rendering:** Powered by **Thymeleaf Fragments** for modular components.
+* **Order Tracking:** Transparency with a personalized "My Orders" dashboard.
 
 ### 🛡️ Enterprise Admin Controls
-* **Centralized Admin Console:** High-impact dashboard for real-time inventory and user base monitoring.
-* **Product Lifecycle Management:** Full CRUD capabilities with integrated **Soft Delete** logic (ensuring data remains for historical order reporting).
-* **Direct Cloud-Media Pipeline:** Automatic image resizing and direct-to-S3 upload streams to reduce server memory overhead.
-* **Order Fulfillment System:** Real-time status updates (Processing, Shipped, Delivered) reflecting across the user ecosystem instantly.
+* **Centralized Admin Console:** Dashboard for real-time inventory and user monitoring.
+* **Product Lifecycle Management:** Full CRUD capabilities with integrated **Soft Delete** logic.
+* **Direct Cloud-Media Pipeline:** Automatic direct-to-S3 upload streams.
+* **Order Fulfillment System:** Real-time status updates reflecting across the ecosystem instantly.
 
 ---
 
 ## ⚙️ Environment Configuration
 
-Before running locally, export the following variables to prevent runtime exceptions:
+Before running locally, export the following variables to your system environment:
 
 ```env
 # Database Settings
@@ -85,8 +77,6 @@ DB_PASSWORD=your_secure_password
 # AWS Cloud Credentials
 AWS_ACCESS_KEY=your_iam_access_key
 AWS_SECRET_KEY=your_iam_secret_key
-AWS_REGION=ap-southeast-2
-AWS_BUCKET_NAME=auramart-storage
 
 # OAuth & Mail
 GOOGLE_CLIENT_ID=your_id.apps.googleusercontent.com
@@ -106,7 +96,7 @@ git clone [https://github.com/Naved-Sheikh/AuraMart-Full-Stack-Springboot-Projec
 # Navigate to directory
 cd AuraMart-Full-Stack-Springboot-Project
 
-# Execute Maven Build (Skips tests to bypass cloud-connectivity check)
+# Execute Maven Build
 mvn clean install -DskipTests
 
 # Launch the Application
