@@ -1,13 +1,13 @@
-
 <h1 align="center"> 🛒 AuraMart - Enterprise-Grade Full-Stack E-Commerce Ecosystem </h1>
 
 <p align="center"> 
   <img src="https://img.shields.io/badge/Java_24-ED8B00?style=for-the-badge&logo=java&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring_Boot_3.5-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" />
-  <img src="https://img.shields.io/badge/Spring_Security_6-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL_8-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" />
-  <img src="https://img.shields.io/badge/Hibernate_6-B71C1C?style=for-the-badge&logo=hibernate&logoColor=white" />
+  <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/AWS_S3-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" />
+  <img src="https://img.shields.io/badge/OAuth2.0-4285F4?style=for-the-badge&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" />
 </p>
 
 <p align="center">
@@ -26,25 +26,45 @@
 
 ---
 
+## 📸 Application Interface
+
+<p align="center">
+  <b>Admin Dashboard</b><br>
+  <i><img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/3a4888d9-ee6a-4229-92b8-26e99fb8d9f3" />
+</i>
+</p>
+
+<p align="center">
+  <b>User Shopping Cart</b><br>
+  <i><img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/62d63ac4-3345-4272-86e1-5c19cf79e3f6" />
+</i>
+</p>
+
+---
+
 ## 🛠️ Comprehensive Tech Stack
 
 ### Backend Core & Infrastructure
-* **Java 24 (Latest LTS Features):** Utilizing modern syntax for optimal performance.
-* **Spring Boot 3.5.5:** Powering the micro-kernel architecture and dependency injection.
-* **Spring Data JPA & Hibernate 6:** Advanced Object-Relational Mapping (ORM) with optimized query execution.
-* **HikariCP:** High-performance JDBC connection pooling for low-latency interactions.
+* **Java 24:** Utilizing modern syntax for optimal performance.
+* **Spring Boot 3.5.5:** Powering the micro-kernel architecture.
+* **Spring Data JPA & Hibernate:** Advanced Object-Relational Mapping (ORM) for efficient database queries.
+* **Lombok:** Reducing boilerplate code for cleaner, maintainable data models.
 
 ### Security Framework
-* **Spring Security 6:** Implementing a robust security filter chain.
-* **Google OAuth 2.0:** Integrated Social Login for frictionless onboarding.
+* **Spring Security:** Implementing a robust security filter chain.
+* **Google OAuth 2.0 Client:** Integrated Social Login for frictionless user onboarding.
 * **RBAC:** Granular authorization logic separating `USER` and `ADMIN` privileges.
-* **BCrypt Encryption:** Industry-standard password hashing.
-* **Environment-Level Secrets:** Keys are injected via system environment variables for maximum safety.
+* **Environment Secrets:** Keys are injected via system environment variables for maximum safety.
 
-### Cloud & DevOps (AWS Ecosystem)
+### Cloud & Third-Party Integrations
+* **AWS S3 (aws-java-sdk-s3):** Centralized and scalable cloud storage for dynamic product images and user profiles.
 * **AWS Elastic Beanstalk:** Orchestrating automated deployment and load balancing.
-* **AWS RDS (MySQL 8):** Managed relational database with high availability.
-* **AWS S3:** Centralized cloud storage for product images and user profiles.
+* **JavaMailSender:** Automated SMTP server integration for real-time order tracking and user notifications.
+* **MySQL 8:** Reliable relational database management.
+
+### Frontend
+* **Thymeleaf:** Server-side Java template engine for dynamic web pages.
+* **Web Technologies:** HTML5, CSS3, Bootstrap 5.
 
 ---
 
@@ -52,15 +72,13 @@
 
 ### 👤 Advanced User Experience
 * **Persistent Cart Logic:** State-aware shopping cart that survives session transitions.
-* **Automated Notification Engine:** Real-time email triggers via **JavaMailSender** for order updates.
-* **Dynamic UI Rendering:** Powered by **Thymeleaf Fragments** for modular components.
-* **Order Tracking:** Transparency with a personalized "My Orders" dashboard.
+* **Automated Notification Engine:** Real-time email triggers for order placements and status updates.
+* **Dynamic UI Rendering:** Powered by Thymeleaf Fragments for modular components.
 
 ### 🛡️ Enterprise Admin Controls
 * **Centralized Admin Console:** Dashboard for real-time inventory and user monitoring.
 * **Product Lifecycle Management:** Full CRUD capabilities with integrated **Soft Delete** logic.
 * **Direct Cloud-Media Pipeline:** Automatic direct-to-S3 upload streams.
-* **Order Fulfillment System:** Real-time status updates reflecting across the ecosystem instantly.
 
 ---
 
@@ -96,7 +114,7 @@ git clone [https://github.com/Naved-Sheikh/AuraMart-Full-Stack-Springboot-Projec
 # Navigate to directory
 cd AuraMart-Full-Stack-Springboot-Project
 
-# Execute Maven Build
+# Execute Maven Build (Skips tests)
 mvn clean install -DskipTests
 
 # Launch the Application
@@ -108,6 +126,3 @@ mvn spring-boot:run
 \<p align="center"\>
 \<i\>Developed and Engineered by \<b\>Mohd Naved\</b\>\</i\>
 \</p\>
-
-```
-```
