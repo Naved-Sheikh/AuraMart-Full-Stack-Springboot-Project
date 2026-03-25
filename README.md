@@ -119,7 +119,7 @@ mvn clean install -DskipTests
 
 # Launch the Application
 mvn spring-boot:run
-```
+
 
 <p align="center">
 <i>Developed and Engineered by <b>Mohd Naved</b></i>
