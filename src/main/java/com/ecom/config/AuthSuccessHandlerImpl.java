@@ -32,7 +32,7 @@ public class AuthSuccessHandlerImpl implements AuthenticationSuccessHandler {
 		{
 			response.sendRedirect("/admin/");
 		} else {
-			// Default redirect for ROLE_USER or Google Users
+			
 			response.sendRedirect("/");
 		}
 	}
