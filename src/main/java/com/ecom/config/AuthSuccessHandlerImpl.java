@@ -25,7 +25,7 @@ public class AuthSuccessHandlerImpl implements AuthenticationSuccessHandler {
 		
 		Set<String> roles = AuthorityUtils.authorityListToSet(authorities);
 		
-		// Professional Touch: Log the login type for debugging (helpful for your YT channel!)
+		
 		System.out.println("User Logged in: " + authentication.getName() + " with Roles: " + roles);
 		
 		if(roles.contains("ROLE_ADMIN"))
