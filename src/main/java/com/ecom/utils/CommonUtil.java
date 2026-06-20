@@ -64,7 +64,7 @@ public class CommonUtil {
 
 	public static String generateUrl(HttpServletRequest request) {
 
-		// http://localhost:8080/forgot-password
+		
 		String siteUrl = request.getRequestURL().toString();
 
 		return siteUrl.replace(request.getServletPath(), "");
@@ -133,7 +133,7 @@ public class CommonUtil {
 
 	    String imageName = (file != null && !file.isEmpty()) ? file.getOriginalFilename() : "default.jpg";
 
-	    // FIXED LINE BELOW: Added .ap-southeast-2
+
 	    String url = "https://" + bucketName + ".s3.ap-southeast-2.amazonaws.com/" + imageName;
 	    
 	    return url;
